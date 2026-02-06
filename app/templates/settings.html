@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Settings — LeadPilot{% endblock %}
+
+{% block content %}
+<h2>Settings</h2>
+
+<!-- API Key Status -->
+<article>
+    <header>API Key Status</header>
+    <table role="grid">
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service, configured in api_status.items() %}
+            <tr>
+                <td>{{ service | capitalize }}</td>
+                <td>
+                    {% if configured %}
+                        <span class="api-ok">Configured</span>
+                    {% else %}
+                        <span class="api-missing">Not configured</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <small>API keys are loaded from your <code>.env</code> file. Restart the app after making changes.</small>
+</article>
+
+<!-- Pipeline Config -->
+<article>
+    <header>Pipeline Configuration</header>
+    <dl>
+        <dt>Default Niche</dt>
+        <dd>{{ settings.default_niche }}</dd>
+        <dt>Default Location</dt>
+        <dd>{{ settings.default_location }}</dd>
+        <dt>Batch Size</dt>
+        <dd>{{ settings.batch_size }}</dd>
+        <dt>Min Score Threshold</dt>
+        <dd>{{ settings.min_score_threshold }}</dd>
+        <dt>Preview Domain</dt>
+        <dd>{{ settings.preview_domain }}</dd>
+        <dt>Mock Mode</dt>
+        <dd>
+            {% if settings.mock_mode %}
+                <span class="api-ok">Enabled</span> — Using mock services for development
+            {% else %}
+                <span class="api-missing">Disabled</span> — Using real APIs
+            {% endif %}
+        </dd>
+    </dl>
+    <small>Edit these values in your <code>.env</code> file.</small>
+</article>
+
+<a href="/" role="button" class="secondary outline">Back to Dashboard</a>
+{% endblock %}
