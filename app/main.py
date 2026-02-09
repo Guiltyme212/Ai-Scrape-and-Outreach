@@ -55,9 +55,17 @@ def json_loads_filter(value):
 templates.env.filters["from_json"] = json_loads_filter
 
 
-# ── Dashboard ────────────────────────────────────────────────────────
+# ── Landing Page ─────────────────────────────────────────────────────
 
 @app.get("/", response_class=HTMLResponse)
+async def landing(request: Request):
+    """Public landing page."""
+    return templates.TemplateResponse("landing.html", {"request": request})
+
+
+# ── Dashboard ────────────────────────────────────────────────────────
+
+@app.get("/dashboard", response_class=HTMLResponse)
 async def dashboard(
     request: Request,
     db: Session = Depends(get_db),
@@ -162,7 +170,7 @@ async def run_pipeline_route(
     location = location or settings.default_location
 
     stats = await pipeline.run_pipeline(db, niche, location, limit)
-    return RedirectResponse(url="/", status_code=303)
+    return RedirectResponse(url="/dashboard", status_code=303)
 
 
 @app.post("/api/leads/{lead_id}/reprocess")
@@ -228,4 +236,4 @@ async def batch_send(db: Session = Depends(get_db)):
             sent_count += 1
 
     db.commit()
-    return RedirectResponse(url="/", status_code=303)
+    return RedirectResponse(url="/dashboard", status_code=303)
