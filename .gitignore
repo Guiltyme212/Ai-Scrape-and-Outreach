@@ -2,24 +2,21 @@
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
 *.egg-info/
 dist/
 build/
-eggs/
 *.egg
 
-# Virtual env
-venv/
+# Environment
+.env
 .venv/
+venv/
 env/
 
-# Environment variables
-.env
-
-# Database
-*.db
-*.sqlite3
+# Google credentials
+credentials/
+*.json
+!package.json
 
 # IDE
 .vscode/
@@ -27,14 +24,9 @@ env/
 *.swp
 *.swo
 
-# Screenshots storage
-app/static/screenshots/*.png
-app/static/screenshots/*.jpg
-!app/static/screenshots/.gitkeep
-
 # OS
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
+# Project
+plan.md
